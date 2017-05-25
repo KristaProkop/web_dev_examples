@@ -1,0 +1,99 @@
+{% extends 'friends/base.html' %}
+
+{% block title %} {{ 'My Friends'}} {% endblock %}
+
+
+{% block content %}
+
+
+<div class ="container-fluid">
+    <div class ="row">
+        <div class ="col-md-6 col-sm-6">
+            <h2>Welcome, <a href="{% url 'wall:index' %}">{{current_user.username}}!</a></h2>
+        </div>
+        <div class ="col-md-6 col-sm-6">
+            <h5 class="pull-right"><a href='{% url "friends:logout" %}'>Logout</a></h5>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class ="container-fluid">
+        <div class="row">
+            <div class ="col-md-6 col-sm-6">
+                <div class='row pull-right'>            
+                    <div class='col-sm-7'>
+                        {% if friends %}
+                            <h3>Friends List:</h3>
+                        {% else %}
+                            <h3>You don't have friends yet!</h3>
+                        {% endif %}
+                        <table class='table table-responsive'>
+                            <tr>
+                                <th>Username</th>
+                                <th colspan="3" class="text-center">Actions</th>
+                               
+                            </tr>
+                            {% if friends %}
+                                {% for friend in friends %}
+                                <tr>
+                                    <td>
+                                        <p>{{friend.friend.username}}</p>
+                                    </td>
+                                      
+                                    <td>    
+                                        <a class="pull-left btn btn-success btn-sm" href='{% url "wall:user_wall" friend_id=friend.friend.id %}'>Visit Wall</a>
+                                    </td>
+                                    <td>
+                                        <a class="pull-left btn btn-primary btn-sm" href="{% url 'friends:show_user' id=friend.friend.id%}">View Profile</a>
+                                    </td>
+                                    <td>
+                                        <form action="{% url 'friends:destroy_friendship' id=friend.friend.id%}" method="POST">
+                                        {% csrf_token %}
+                                            <button class="pull-left btn btn-sm btn-danger" >Unfriend</button>      
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class ="col-md-6 col-sm-6">
+                <h3>Users not on your friends list:</h3>
+                <div class='row'>
+                    <div class='col-sm-7' id='user_table'>
+                        <table class='table  table-responsive' >
+                            <tr>
+                                <th>Username</th>
+                                <th colspan="2"  class="text-center">Actions</th>
+                            </tr>
+                                {% for user in users %}
+                                <tr>
+                                    <td><p>{{user.username}}</p></td>
+                                    
+                                    <td>
+                                        <a class="pull-left btn btn-primary btn-sm" href="{% url 'friends:show_user' id=user.id%}">View Profile</a>
+                                    </td>
+                                    <td>
+                                        <form action="{% url 'friends:create_friendship' id=user.id%}" method='post'>
+                                            {% csrf_token %}
+                                            <button class="pull-left btn btn-info btn-sm"> Add Friend</button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+ 
+{% endblock %}

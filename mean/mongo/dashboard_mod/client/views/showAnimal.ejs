@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animal</title>
+</head>
+<body>
+<a href="/">Go Home</a>
+<ul>
+    <li><%= animal[0]['name'] %></li>
+    <ul>
+        <li>Type: <%= animal[0]['family'] %></li>
+        <li>Color: <%= animal[0]['color'] %></li>
+        <li>Lifespan: <%= animal[0]['lifespanYears'] %> Years</li>
+    </ul>
+</ul>
+<form action="/animals/destroy/<%=animal[0]['_id']%>" method='post' >
+            <button>Delete Animal</button>
+        </form>
+<button><a href="/animals/edit/<%=animal[0]['_id']%>">Edit Animal</a></button>
+
+</body>
+</html>

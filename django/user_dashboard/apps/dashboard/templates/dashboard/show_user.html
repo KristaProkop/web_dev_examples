@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Show User</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'loginReg:index' %}">User App</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+            <li><a href="{% url 'users:show_user' id=request.session.id %}">My Profile</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'loginReg:logoff' %}">Log off</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container jumbotron">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>{{user.first_name}} {{user.last_name}}</h2>
+          <dl class="dl-horizontal">
+              <dt>User ID:</dt>
+              <dd>{{user.id}}</dd>
+              <dt>Email Address:</dt>
+              <dd>{{user.email}}</dd>
+              <dt>Description:</dt>
+              <dd>{{user.description}}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3>Leave a Message for {{user.first_name}}</h3>
+          <form action="{% url 'users:create_message' user_id=user.id creator_id=request.session.id  %}" method="POST">
+            {% csrf_token %}
+              <div class="form-group">
+                <textarea rows="5" class="form-control" name="message"></textarea>
+                <button class="btn btn-primary pull-right">Post</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        {% for message in messages %}
+          <div class="col-sm-12 pull-right">
+            <h4>{{message.creator.first_name}}{{message.creator.last_name}} Wrote:</h4>
+            <textarea class="form-control">{{message.message}} {{message.id}}</textarea>
+            {% for comment in comments %}
+              {% if comment.message.id == message.id %}
+                <div class="col-sm-12 pull-right">
+                  <h4>{{comment.user.first_name}}{{comment.user.last_name}} Wrote:</h4>
+                  <textarea class="form-control">{{comment.comment}}</textarea>
+                </div>
+              {% endif %}
+            {% endfor %}
+             
+          </div>
+      </div>
+      <form action="{% url 'users:create_comment' user_id=request.session.id message_id=message.id origin_id=user.id %}" method="POST">
+        {% csrf_token %}
+          <div class="form-group col-sm-9 pull-right">
+            <textarea rows="5" class="form-control" name="comment" placeholder="Reply..."></textarea>
+            <button class="btn btn-primary pull-right">Post</button>
+          </div>
+      </form>
+      </div>
+        {% endfor %}
+          </div>
+      </div>
+    </div>
+    
+         
+
+</body>
+</html>

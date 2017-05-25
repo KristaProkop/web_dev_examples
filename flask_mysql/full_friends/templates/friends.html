@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Friend</title>
+    <link rel="stylesheet" type="text/css" href='../../static/styles.css'>
+    <meta charset="utf-8">
+</head>
+<body>
+<div>
+    <h2>Edit Friend</h2>
+    <form id="edit" action="/friends/{{ friend[0]['id'] }}" method="POST">
+         <label><input class="textfields" type="hidden" value="{{ friend[0]['id'] }}" name="id"></label>
+        <label>First Name <input class="textfields" type="text" value="{{ friend[0]['first_name'] }}" name="first_name"></label>
+        <label>Last Name <input  class="textfields" type="text" value="{{ friend[0]['last_name'] }}" name="last_name"></label>
+        <label>Email <input class="textfields" type="text" value="{{ friend[0]['email'] }}" name="email"></label>
+        <input class="buttons" type="submit" name="update" value="update">
+    </form>
+    </div>
+</body>
+</html>

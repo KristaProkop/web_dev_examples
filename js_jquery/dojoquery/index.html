@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DojoQuery</title>
+</head>
+<body>
+    <script type="text/javascript" src='main.js'></script>
+
+    <div id="myDiv">
+        <button id="click">Click</button>
+        <button id="hover">Hover</button>
+    </div>
+
+<script type="text/javascript">
+
+
+   (function() {
+    function $Dojo(element){
+        element = document.getElementById(element)
+        this.element = element
+        return this
+    }
+
+    $Dojo.prototype.click = function(callback) {
+        this.element.addEventListener("click", clickFunction);
+        function clickFunction() {
+            callback();
+        }
+    }
+
+    $Dojo.prototype.hover = function(inEvent, outEvent) {
+
+        this.element.addEventListener("mouseover", hoverOn);
+
+        if (outEvent != undefined) {
+            this.element.addEventListener("mouseout", hoverOff);
+        }
+        function hoverOn() {
+            inEvent();
+        }
+        function hoverOff() {
+            outEvent();
+        }
+    }
+    
+    var test = new $Dojo('click').click()
+
+})(); 
+
+
+
+</script>
+</body>
+</html>

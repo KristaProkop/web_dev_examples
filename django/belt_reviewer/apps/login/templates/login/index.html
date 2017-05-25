@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Book Review Site</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login/styles.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+</head>
+<body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+    <div class="red lighten-2" id="box"></div>
+      <h2>Book Review Hub</h2>
+      <div class="section"></div>
+        <div class="container">
+          {% if messages %}
+            {% for message in messages %}
+             <div class="container card-panel teal lighten-2"><p class="white-text">{{message}}</p></div>
+            {% endfor %}
+           {% endif %}
+        </div>
+
+        <div class="row">
+         <div class="col s12 m12">
+          <div class="section"></div>
+          <div id="login" class="container">
+          <h5 class="white-text top_box">Login into your account</h5>
+            <div id="form_box" class="z-depth-1 grey lighten-4 row" >
+             
+              <form class="col s12" action="{%url 'login:login' %}" method="post">
+                {% csrf_token %}
+                {{logForm}}
+                <div class='row'>
+                  <div class='col s12'>
+                  </div>
+                </div>
+                <br />
+                  <div class='row'>
+                    <button type='submit' name='btn_login' class='col s6 btn btn-large waves-effect indigo lighten-2'>Login</button>
+                  </div>
+              </form>
+               <div id="register_button" class='row'>
+                    <button onclick="showRegister()" type='submit' name='btn_register' class='col s6 btn btn-large waves-effect red lighten-2'>Register</button>
+               </div>
+             </div>
+           </div>
+          </div>
+
+          <div class="col s12 m12">
+            <div class="section"></div>
+            <div style="display:none;" id="register" class="container col s6">
+              <h5 class="white-text top_box">Register</h5>
+              <div id="form_box" class="z-depth-1 grey lighten-4 row">
+                
+                <form class="col s12" action="{%url 'login:create' %}" method="post">
+                  {% csrf_token %}
+                  {{regForm}}
+                  <div class='row'>
+                    <div class='col s12'>
+                    </div>
+                  </div>
+                  <br />
+                    <div class='row'>
+                      <button type='submit' name='btn_register' class='col s6 btn indigo lighten-2'>Register</button>
+                    </div>
+                </form>
+                <div class='row'>
+                  <button onclick="showLogin()" type='submit' name='btn_login' class='col s6 btn red lighten-2'>Login</button>
+                </div>
+              </div>
+            </div>
+         </div>
+        </div>
+
+
+<script type="text/javascript">
+  function showRegister() {
+   document.getElementById('register').style.display = "block";
+   document.getElementById('login').style.display = 'none';
+  }
+  function showLogin() {
+   document.getElementById('login').style.display = "block";
+   document.getElementById('register').style.display = 'none';
+}
+</script>
+
+ 
+
+    
+
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <title>Log In</title>
+</head>
+<body>
+  <header>
+    <h1>Log in or Register</h1>
+  </header>
+  <div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <h5>{{message}}</h5>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form action="/login" method="POST">
+      <label for="email">Email Address:<input type="text" name="email" value="{{ session['email'] }}" ></label>
+      <label for="password">Password:<input type="password" name="password"></label>
+      <input class="submit" type="submit" value="Log in" id="submit">
+    </form>
+    <form action="/registration", method="GET">
+      <input class="submit" type="submit" value="Register" name="register">
+      </form>
+  </div>
+
+</body>
+</html>

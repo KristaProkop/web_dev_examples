@@ -1,0 +1,21 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+  	<title>Pokemon API</title>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		 	for (index = 1; index < 152; index++ ) {
+		   		var src = ("http://pokeapi.co/media/img/" + index + ".png");
+	    		$('body').append($('<img/>').attr("src", src)
+	    		 );
+	    	}
+	    });
+
+	    
+	</script>
+  </head>
+  <body>
+  
+  </body>
+  </html>

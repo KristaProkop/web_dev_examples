@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    <title>CHSA Gala</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'gala/theme/css/landing-page.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                {% if messages %}
+                    {% for message in messages %}
+                        <h3 class="navbar-brand topnav"">{{message}}</h3>
+                    {% endfor %}
+                {% endif %}
+            </div>
+           
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a>February 18, 2018 6:00pm</a>
+                    </li>
+                    <li>
+                        <a href="http://www.theseville.com/">The Seville</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>2018 CHSA Gala</h1>
+                        <h3>rsvp now</h3>
+                        <hr class="intro-divider">
+                        <form action="{% url 'gala:rsvp' %}" method="POST">
+                            {% csrf_token %}
+                              <div class="form-group">
+                                <label class="control-label" for="code">Response code (from top left of RSVP card):</label>
+                                <input placeholder="<required>" required id="code" name="code" type="text" class="form-control" input">
+                              </div>
+                              <button name="no" class="btn btn-default btn-lg">Thanks, but we cannot attend</button>
+                              <button name="yes" class="btn btn-default btn-lg">Yes, we're coming!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Chicagoland Homeless Services Associates 2017. All Rights Reserved</p>
+                </div>
+                <div class="col-lg-6">
+                    <img class="pull-right" id="logo" src="{% static 'gala/theme/img/logo.png' %}">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Registration Form</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'login/styles.css' %}"
+ media="screen" title="no title"  charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div>
+        <h1>Register</h1>
+        <form action="{%url 'login:create' %}" method="post"> 
+        {% csrf_token %}
+            <label>First Name: <input type="name" name="first_name"></label>
+            <label>Last Name: <input type="name" name="last_name"></label>
+            <label>Email <input type="email" name="email"></label>
+            <label>Password <input type="password" name="password1"></label>
+            <label>Confirm Password <input type="password" name="password2"></label>
+            <button>Register</button>
+        </form>
+    </div>
+
+ {% if messages %}
+    {% for message in messages %}
+        <h3 class="{{message.tags}}">{{message}}</h3>
+    {% endfor %}
+  {% endif %}
+
+    <div id="login">
+    <h1>Log in</h1>
+        <form id="inset" action="{%url 'login:login' %}" method="post"> 
+        {% csrf_token %}
+            <label>Email <input type="email" name="email"></label>
+            <label>Password <input type="password" name="password"></label>
+            <button>Log in</button>
+        </form>
+    </div>
+
+</body>
+</html>

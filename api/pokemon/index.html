@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pokemon Data</title>
+ 	<link rel="stylesheet" type="text/css" href="styles.css">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript">
+var $wrapper = $('#images');
+
+$wrapper.find('img').sort(function (a, b) {
+    return +a.dataset.percentage - +b.dataset.percentage;
+})
+.appendTo( $wrapper );
+
+	//use for loop to get all images
+		$(document).ready(function(){
+		 	for (index = 1; index < 152; index++ ) {
+		   		var src = ("http://pokeapi.co/media/img/" + index + ".png");
+	    		$('#images').append($('<img/>').attr({"src": src, "id": index, "class": 'inactive'})
+	    		 );
+	    	}
+	    });
+
+	//when user clicks on an image, it moves to the box and the pokemon's details appear
+		$(document).on('click', '.inactive', function(){
+			$(this).attr("class",'active').appendTo('#details');
+			var url = ("http://pokeapi.co/api/v1/pokemon/" + $(this).attr('id'))
+			$.get(url, function(res) {
+			    $('#details').append("<h4> <strong>Name: </strong> " + res.name + "</h4>");
+			    $('#details').append("<h4> <strong>Height: </strong>" + res.height + "</h>");
+			    $('#details').append("<h4> <strong>Weight: </strong>" + res.weight + "</h4>");
+			    $('#details').append("<h4> <strong>Types:</strong> </h4> <ul>");
+			    for (index = 0; index < res.types.length; index++ ) {
+			    	$('#details').append("<li>" + res.types[index].name) + "</li></ul>";
+			    	}
+				}, 'json');
+		})
+
+	//when user clicks on active image clears the details box
+		$(document).on('click', '.active', function(){
+			$('img').appendTo('#images').removeAttr('class').attr('class', 'inactive');
+			$('h4').remove();
+			$('li').remove();	
+		});
+
+	</script>
+
+</head>
+<body>
+	<h1>Pokemon Data</h1>
+	<h2>Click any Pokemon for details!</h2>
+	<div id="images"></div>
+	<div id="details">
+		<h3>Pokemon Details</h3>
+	</div>
+
+</body>
+</html>

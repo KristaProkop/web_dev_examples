@@ -1,0 +1,62 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Helvetica;
+    border: none;
+    border-collapse: collapse;
+    border-bottom: 1px solid gray;
+
+
+}
+th {
+    background-color: #c4c4c4;
+}
+
+td {
+    padding: 7px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.buttons {
+    width: 60px;
+    display: block;
+    margin: auto;
+}
+
+
+h2 {
+    font-family: Helvetica;
+    text-align: center;
+    padding-top: 10px;
+}
+
+label {
+    margin-left: 40px;
+    padding-top: 10px;
+    display: block;
+    font-family: Helvetica;
+}
+
+.textfields {
+    width: 300px;
+}
+
+#add {
+    margin-left: 60px;
+}
+
+#add>.buttons {
+    margin-left: 360px;
+}
+
+#edit>.buttons {
+    margin-left: 360px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Blackjack</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('#hit').hide();
+        $('#reset').hide();
+        $("#start").click(function(){
+            $("#start").hide();
+            $("#hit").show();
+            $('#reset').show();
+        });
+    });
+    </script>
+</head>
+<body onload="startGame()">
+
+    <script type="text/javascript" src='cards.js' ></script>
+
+    <button id="start" onclick="playNow()">Play Now!</button>
+
+    <div id="current_hand"></div>
+
+    <button id="hit" onclick="dealCard()">Hit Me!</button>
+    <button id="reset" onclick="reset()">Start Over</button>
+
+    <!-- The Modal -->
+    <aside id="results">
+    </aside>
+   
+</body>
+</html>

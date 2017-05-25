@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wall</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+      $( function() {
+        $( "#accordion" ).accordion({
+          heightStyle: "content",
+          active: false,
+          collapsible: true,
+        });
+      } );
+  </script>
+</head>
+<body>
+    <header>
+        <h1>Coding Dojo Wall</h1>
+        <h6>Welcome, {{ session['first_name'] }}</h6>
+        <form action="/logout" method="GET">
+            <button>Log out</button>
+        </form>
+    </header>
+    <form action="/post_message" method="POST">
+        <h2>Post a message</h2>
+        <textarea id="post_message" type="textarea" name="message"></textarea>
+        <input class="submit" type="submit" value="Post">
+    </form>
+    <div id="accordion">
+    {% for message in messages %}
+      <section>
+        <h3>{{ message['first_name'] }} {{ message['last_name']  }}  posted at {{ message['created_at'] }}</h3>
+        {% if message['id'] == session['id'] %}
+          <form class="delete_button" action="/delete_message/{{ message['message_id'] }}", method="POST">
+            <input class="delete" type="submit" value="Delete">
+          </form>
+        {% endif %}
+        <p class="message">{{ message['message'] }}</p>
+      </section>
+      <div>
+        {% for comment in comments %}
+            {% if message['message_id'] == comment['message_id'] %}
+                <h3 class="replies">{{ comment['first_name'] }} {{ comment['last_name'] }} replied at {{ comment['created_at'] }}</h3>
+                    {% if comment['id'] == session['id'] %}
+                        <form class="delete_button" action="/delete_comment/{{ comment['comment_id'] }}", method="POST">
+                            <input class="delete" type="submit" value="Delete">
+                        </form>
+                    {% endif %}
+                <p class="replies text">{{ comment['comment'] }}</p>
+            {% endif %}
+        {% endfor %}
+        <form class="comments" action="/post_comment/{{ message['message_id'] }}>" method="POST">
+            <h4>Reply</h4>
+            <textarea id="post_comment" type="textarea" name="comment"></textarea>
+            <input class="submit" type="submit" value="Post">
+        </form>
+      </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

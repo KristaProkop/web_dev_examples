@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <p class="navbar-brand">User App</p>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'loginReg:login' %}">Sign In</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  <div class="container jumbotron text-left">
+    <h1>User Dashboard App</h1>
+    <p>A cool application built using Django's MVC framework and a little Bootstrap for styling and responsiveness.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'dashboard:index' %}" role="button">Start App</a>
+    <!-- CHANGE THIS BUTTON TO LOGIN LOGIC -->
+  </div> 
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+          <h3>Manage Users</h3>
+          <p>Add, remove, and edit users from the network.</p>
+      </div>
+      <div class="col-sm-4">
+          <h3>Leave messages</h3>
+          <p>Write messages and comments on users' walls.</p>
+      </div>
+      <div class="col-sm-4">
+          <h3>Manage user accounts</h3> 
+          <p>(Available to admin-level only)</p>
+      </div>
+    </div>
+  </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

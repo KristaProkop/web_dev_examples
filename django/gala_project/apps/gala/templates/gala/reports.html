@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    <title>Gala Attendee Report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'gala/theme/css/landing-page.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+</head>
+<body>
+
+
+<!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                {% if messages %}
+                    {% for message in messages %}
+                        <h3 class="navbar-brand topnav"">{{message}}</h3>
+                    {% endfor %}
+                {% endif %}
+                <select id="purpose">
+                    <option value="1">RSVP Status</option>
+                    <option value="2">Hotel Rooms</option>
+                    <option value="3">Dinner Selections</option>
+                </select>
+            </div>
+           
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a>February 18, 2018 6:00pm</a>
+                    </li>
+                    <li>
+                        <a href="http://www.theseville.com/">The Seville</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class='container'>
+            <div class='row'>
+                <div class='col-sm-12' id="rsvps">
+                    <h2>RSVP Status Report</h2>
+                    <table class='table'>
+                        <tr>
+                            <th>Invitee Name</th>
+                            <th>Guests</th>
+                            <th>RSVP Date</th>
+                            <th>RSVP</th>
+                            <th>Total Attending</th>
+                            <th>Hotel Check-in</th>
+                            <th>Hotel Check-out</th>
+                        </tr>
+                        <tr>
+                            {% if invitees %}
+                            {% for invitee in invitees %}
+                                <td>{{invitee.name}}</td>
+                                <td>{% for guest in guests %}
+                                  {% if invitee == guest.invitee %}
+                                  {{guest.name}}
+                                  {% endif %}
+                                {% endfor %}
+                                </td>
+
+                                <td>{{invitee.rsvp_date}}</td>
+                                <td>{{invitee.rsvp}}</td>
+                                <td>{{invitee.guests_count}}</td>
+                                {% for hotel in hotels %}
+                                  {% if invitee == hotel.invitee %}
+                                    <td>{{hotel.check_in}}</td>
+                                    <td>{{hotel.check_out}}</td>
+                                  {% endif %}
+                                {% endfor %}
+                               
+                        </tr>
+                            {% endfor %}
+                        {% endif %}
+                   </table>
+                </div>
+                <div class='row'>
+                    <div class='col-sm-6' id="dinners">
+                        <h2>Dinner Selections</h2>
+                        <table class='table'>
+                            <tr>
+                                <th>Preferred Name</th>
+                                <th>Group Name</th>
+                                <th>Dinner Selection</th>
+                                <th>Dietary Restrictions</th>
+                            </tr>
+                            <tr>
+                                {% if dinners %}
+                                {% for dinner in dinners %}
+                                    <td>{{dinner.preferred_name}}</td>
+                                    <td>{{dinner.invitee.name}}</td>
+
+                                    <td>{{dinner.dinner}}</td>
+                                    <td>{{dinner.notes}}</td>
+                            </tr>
+                                {% endfor %}
+                           <tr>
+                               <td>SUBTOTALS:</td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                           </tr>
+                            {% for dinner in dinner_subtotals%}
+                            <tr>
+                                <td>{{dinner.dinner}}</td>
+                                <td>{{dinner.the_count}}</td>
+                            </tr>
+                             {% endfor %}
+                              {% endif %}
+                       </table>
+                        
+                    </div>
+                    <div class='col-sm-6' id="hotels">
+                        <h2>Hotel Rooms</h2>
+                        <table class='table'>
+                            <tr>
+                                <th>Invitee</th>
+                                <th>Check in </th>
+                                <th>Check out</th>
+                            </tr>
+                            <tr>
+                                {% if hotels %}
+                                  {% for hotel in hotels %}
+                                    <td>{{hotel.invitee.name}}</td>
+                                    <td>{{hotel.check_in}}</td>
+
+                                    <td>{{hotel.check_out}}</td>
+                            </tr>
+                                  {% endfor %}
+                                {% endif %}
+                       </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Chicagoland Homeless Services Associates 2017. All Rights Reserved</p>
+                </div>
+                <div class="col-lg-6">
+                    <img class="pull-right" id="logo" src="{% static 'gala/theme/img/logo.png' %}">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#purpose').on('change', function() {
+              if ( this.value == '1')
+              {
+                $("#rsvps").show();
+              }
+              else
+              {
+                $("#rsvps").hide();
+              }
+              if ( this.value == '2')
+              {
+                $("#hotels").show();
+              }
+              else
+              {
+                $("#hotels").hide();
+              }
+              if ( this.value == '3')
+              {
+                $("#dinners").show();
+              }
+              else
+              {
+                $("#dinners").hide();
+              }
+            });
+        });
+    </script>
+</body>
+</html>

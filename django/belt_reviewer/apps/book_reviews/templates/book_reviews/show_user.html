@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'books/styles.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>  
+
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a class="brand-logo">Reviewer Profile</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'book_reviews:create' %}">Add Book and Author</a></li>
+            <li><a href="{% url 'book_reviews:index' %}">Home</a></li>
+            <li><a href="{% url 'login:logout' %}">Logout</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{% url 'login:logout' %}">Logout</a></li>
+            <li><a href="{% url 'book_reviews:index' %}">Home</a></li>
+            </li>
+            <li><a href="{% url 'book_reviews:create' %}">Add Book Review</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <!-- end nav -->
+
+    <div class="row"></div>
+    <div class="row">
+    <div class="col s1"></div>
+    <div class="col s5 m4 l3">
+      <div class="row"></div>
+       <div class="row"></div>
+        <div class="card red lighten-2">
+          <div class="col"></div>
+            <span class="card-title white-text">  {{user.first_name}} {{user.last_name}}</span>
+          <div class="card-content">
+            <p class="white-text">{{user.email}}</p>
+            <p class="white-text">{{user.created_at}}</p>
+          </div>
+        </div>
+      </div>
+              
+
+      <div class="col s5 m6 l8">
+        <div class="container">
+          <div class="section scrollspy">
+            <h5 class="red-text text-lighten-2">{{user.first_name}}'s Review Feed</h5>
+            {% for review in reviews %}
+            <div class="z-depth-4 white">
+                <p>Reviewed <a href="{% url 'book_reviews:show_book' id=review.book.id %}">{{review.book.title}}</a> on {{review.created_at}}
+                </p>
+                <blockquote>
+                  {{review.review_content}}
+                </blockquote>
+            </div>
+           {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end info -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+<!-- Compiled and minified JavaScript --> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script> 
+
+ 
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(".button-collapse").sideNav();
+              });
+    </script>     
+                
+
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app='usersApp'>
+<head>
+    <title>Controlling Users</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('usersApp', []);
+        app.controller('usersController', ['$scope', function($scope) {
+
+            $scope.orderByField = 'firstName';
+            $scope.reverseSort = false;
+
+            $scope.addUser = function() {
+                var today = new Date(Date.now()).toLocaleString();
+                $scope.newUser.date = today;
+                if(!$scope.users) {
+                    $scope.users = [];
+                }
+                $scope.users.push($scope.newUser);
+                $scope.newUser = {};
+            }
+
+            $scope.deleteUser = function(index) {
+                $scope.users.splice(index, 1);
+            }
+
+        }]);
+
+    </script>
+</head>
+<body>
+
+    <div id="usersController" ng-controller = "usersController">
+
+        <form>
+            <label>First Name <input type="name" name="firstName" ng-model="newUser.firstName"></label>
+            <label>Last Name<input type="name" name="lastName" ng-model="newUser.lastName"></label>
+            <label>Favorite Language <input ng-model="newUser.language" type="text" name="language"></label>
+            <button ng-click="addUser();">Create User</button>
+        </form>
+    
+
+        <div ng-if= "users">
+            <label>Search Table<input ng-model="search.$" type="text"></label>
+            <table >
+                 <tr>
+                    <th>
+                      <a href="#" ng-click="orderByField='firstName'; reverseSort = !reverseSort">First Name</a>
+                    </th>
+                    <th>
+                      <a href="#" ng-click="orderByField='lastName'; reverseSort = !reverseSort">Last Name</a>
+                    </th>
+                    <th>Favorite Language</th>
+                    <th>
+                      <a href="#" ng-click="orderByField='date'; reverseSort = !reverseSort">Date</a>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+                <tr ng-repeat= "user in users | orderBy:orderByField:reverseSort  | filter:search track by $index ">
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.language}}</td>
+                    <td>{{user.date}}</td>
+                    <td><button ng-click="deleteUser($index);">Delete User</button></td>
+                </tr>
+            </table>
+
+            
+
+        </div>
+
+    </div>
+  
+</body>
+</html>

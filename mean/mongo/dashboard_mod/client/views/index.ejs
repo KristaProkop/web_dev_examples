@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animals Home Page</title>
+</head>
+<body>
+    <button> <a href="/animals/new">New Animal</a></button>
+
+    <ul>
+    <% for(var i=0; i<animals.length; i++) { %>
+        <li>Name: <%= animals[i]['name']%></li>
+        <a href="/animals/<%= animals[i]['_id']%>">See Details</a>
+    <% } %>
+    </ul>
+</body>
+</html>

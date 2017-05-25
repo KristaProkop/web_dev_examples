@@ -1,0 +1,163 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+label {
+    margin-left: 20px;
+}
+
+input {
+    width: 40%;
+    display: block;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+textarea {
+    margin-left: 20px;
+    width: 90%;
+    height: 100px;
+    border-color: #007fff;
+}
+
+.submit {
+    display: block;
+    width: 80px;
+    background-color: #48bd58;
+    color: white;
+    margin: 10px;
+    margin-left: 20px;
+    border-radius: 15px;
+}
+
+h1 {
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+    font-weight: lighter;
+    font-family: Helvetica;
+}
+
+h2 {
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 20px;
+    float: left;
+    width: 300px;
+    font-family: Helvetica;
+/*    font-weight: lighter;*/
+    color: #007fff;
+}
+
+div {
+    margin-left: 20px;
+    display: block;
+    max-width: 970px;
+    font-family: Helvetica;
+}
+
+section>h3 {
+    display: inline-block;
+    font-style: normal;
+    font-size: .8em;
+}
+
+h3 {
+    display: inline-block;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+p {
+    margin-left: 40px;
+    margin-bottom: 30px;
+    word-wrap: break-word;
+    max-width: 80%;
+}
+
+h4 {
+    margin-left: 20px;
+    color: #007fff
+}
+
+h5 {
+    text-align: center;
+    display: block;
+    color: red;
+    font-size: 16px;
+    width: 260px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+h6 {
+    margin-top: -60px;
+    width: 100%;
+    text-align: right;
+    font-size: 1rem;
+    font-weight: lighter;
+}
+
+
+header {
+    background-color: #007fff;
+    color: white;
+    font-family: Helvetica;
+    width: 95%;
+    height: 80px;
+    padding-right: 10%;
+    margin-bottom: 10px;
+}
+
+button {
+    float: right;
+    width:70px;
+    margin-top: 5px;
+    margin-right: 10px;
+    border-radius: 15px;
+    background-color: white;
+    color: #007fff;
+}
+
+.comments {
+    margin-top: -15px;
+    margin-left: 60px;
+}
+
+.replies {
+    margin-left: 60px;
+    font-size: 1em;
+}
+
+.text {
+    margin-left: 120px;
+}
+
+.delete {
+    display: inline-block;
+    background-color: #ff8682;
+    color: white;
+    width: 50px;
+    border-radius: 15px;
+    padding: 2px;
+}
+
+.delete_button {
+    display: inline-block;
+    font-size: .7em;
+    font-weight: lighter;
+
+}
+
+.message {
+    display: block;
+    font-size: 1.1em;
+}
+
+#accordion {
+    margin-left: 20px;
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Animal</title>
+</head>
+<body>
+
+    <form method="post" action="/animals/<%=animal[0]['_id']%>">
+        <label>Name</label>
+        <input type="name" name="name" value="<%=animal[0]['name']%>" required>
+        <label>Family</label>
+        <input type="text" name="family" value="<%=animal[0]['family']%>" required>
+        <label>Color</label>
+        <input type="text" name="color" value="<%=animal[0]['color']%>" required>
+        <label>Lifespan (years)</label>
+        <input type="number" name="lifespanYears" value="<%=animal[0]['lifespanYears']%>" required>
+        <button>Submit Changes</button>
+    </form>
+
+</body>
+</html>

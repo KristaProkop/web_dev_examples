@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+
+	<title>Game of Thrones</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript">
+			$(document).on('click', '.inactive', function(){
+				$('h3, h4, .active').remove();  //clear any currently selected house
+				$(this).clone().attr("class",'active').appendTo('#wrapper'); //copy the house image and display in the box
+	    		var houseNum = $('.active').attr('alt'); //get house number for API call
+				var url = ("http://anapioficeandfire.com/api/houses/" + houseNum);
+				$.get(url, function(res){	
+				$('#wrapper').append("<h3>" + res.name + "</h3>");
+					$('#wrapper').append("<h4> Name: " + res.name + "</h4>");
+						if (res.words){ //only put this if the house has words
+							$('#wrapper').append("<h4> Words: " + res.words + "</h4>")
+						};
+					var titles = []; //gather all titles in array
+					for (index = 0; index < res.titles.length; index++ ) {
+				    	titles.push(res.titles[index]);  
+				    	};
+				    	var list = (titles.join(", "));  //convert to a comma seperated list
+					$('#wrapper').append("<h4> Titles: " + list + "</h4>");
+			    }, "json");
+			})		
+	</script>
+</head>
+<body>
+	<h1>The Major Houses of <span>A Song of Ice and Fire</span></h1>
+	<section id="tiled_houses">
+		<div class="house">
+			<h2>HOUSE STARK</h2>
+			<img alt="362" class="arms inactive" src="images/362.png">
+		</div>
+		<div class="house">
+			<h2>HOUSE BARATHEON</h2>
+			<img alt="15" class="arms inactive" src="images/15.png">
+		</div>
+		<div class="house">
+			<h2>HOUSE LANNISTER</h2>
+			<img alt="229" class="arms inactive" src="images/229.png">
+		</div>
+		<div class="house">
+			<h2>HOUSE MARTELL</h2>
+			<img alt="285" class="arms inactive" src="images/285.png">
+		</div>
+		<div class="house">
+			<h2>HOUSE BAELISH</h2>
+			<img alt="10" class="arms inactive" src="images/10.png">
+		</div>
+		<div class="house">
+			<h2>HOUSE TULLY</h2>
+			<img alt="395" class="arms inactive" src="images/395.png">
+		</div>
+		<div class="house">
+			<h2>HOUSE TYRELL</h2>
+			<img alt="397" class="arms inactive" src="images/397.png">
+		</div>
+		<div class="house">
+			<h2>HOUSE ARRYN</h2>
+			<img alt="7" class="arms inactive" src="images/7.png">
+		</div>
+	</section>
+	<section id="detail">
+		<div id="wrapper">
+			<h3>Click any Coat of Arms to see details!</h3>
+		</div>
+	</section>
+</body>
+</html>

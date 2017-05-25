@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CrypTweet</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'twitter/styles.css' %}" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+</head>
+<body>
+
+  <nav class="cyan">
+    <div class="nav-wrapper">
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="{% url 'login:logout' %}">Logout</a></li>
+        <li>Hi {{request.session.handle}}</li>
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="section"></div>
+  <div class="container">
+    {% if messages %}
+      {% for message in messages %}
+      {% if 'error' in message.tags %}
+       <div class="container card-panel red lighten-2"><p class="white-text">{{message}}</p></div>
+      {% endif %}
+      {% endfor %}
+     {% endif %}
+  </div>
+
+
+  {% if messages %}
+    {% for message in messages %}
+      {% if 'warning' in message.tags %}
+        <a class="waves-effect waves-light btn modal-trigger" href="#modal1"> Show Key</a>
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <h4>Successfully Generated Key </h4>
+            <p>Your encryption key is {{message}}. Don't lose it! Share it only with those to whom you grant permission to decrypt your tweets.</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+     
+  {% if 'key' in request.session %}        
+  <div class="row"></div>
+  <div class="container">     
+    <div class="row">
+      <div class="col s4 z-depth-1">
+      <h5 class="cyan-text">Decrypt tweet</h5>
+      <form class="col s12 " action="{% url 'twitter:decrypt_tweet' %}" method="POST">
+      {% csrf_token %}
+        <div class="row">
+          <div class="col s12">
+            Tweet ID:
+            <div class="input-field inline">
+              <input name="tweet_id" id="tweet_id" type="text" class="validate">
+              <label for="tweet_id">ID</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn cyan darken-4">Decrypt</button>
+          {% if 'tweet' in request.session %}
+            <div class="row"></div>
+              <a class="waves-effect waves-light cyan darken-2 btn modal-trigger" href="#modal2"> Show Tweet</a>
+              
+              <!-- Modal Structure -->
+              <div id="modal2" class="modal">
+                <div class="modal-content">
+                  <h4>@{{request.session.author}} </h4>
+                  <blockquote><p>{{request.session.tweet}}</p></blockquote>
+                  <p>{{request.session.date}}</p>
+                </div>
+              <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
+              </div>
+            </div>
+          {%endif%}
+        </div>
+       </form>
+      </div>
+     {% endif %}
+
+
+      <div class="col s7 offset-s1 z-depth-1">
+      {% if 'key' not in request.session %}
+          <h5 class="cyan-text">To send encrypted tweets, you must link your account and generate an encryption key.</h5>
+          <p>First <a href="https://apps.twitter.com/">Create a Twitter App</a> and enter provided keys here:</p>
+          <form class="col s12" action="{% url 'twitter:generate_key' %}" method="POST">
+          {% csrf_token %}
+            <div class="row">
+              <div class="col s12">
+                Consumer Key:
+                <div class="input-field inline">
+                  <input name="consumer_key" type="text" class="validate">
+                  <label for="consumer_key" >Consumer Key</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12">
+                Consumer Secret:
+                <div class="input-field inline">
+                  <input name="consumer_secret" type="text" class="validate">
+                  <label for="consumer_secret" >Consumer Secret </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12">
+                Access Token:
+                <div class="input-field inline">
+                  <input name="access_token" type="text" class="validate">
+                  <label for="access_token" >Access Token</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12">
+                Access Token Secret:
+                <div class="input-field inline">
+                  <input name="access_token_secret" type="text" class="validate">
+                  <label for="access_token_secret" >Access Token Secret</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <button class="btn cyan darken-4">Link Account and Get Key</button>
+            </div>
+          </form>
+      {% endif %}
+
+      {% if 'key' in request.session %}
+          <h5 class="cyan-text">Send an encrypted tweet</h5>
+          <form class="col s12" action="{% url 'twitter:create_tweet' %}" method="POST">
+          {% csrf_token %}
+            <div class="row">
+              <div class="col s12">
+                Tweet:
+                <span></span>
+                <div class="input-field inline">
+                  <textarea name="tweet" class="validate"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <button class="btn cyan darken-4">Send</button>
+            </div>
+          </form>
+      {% endif %}
+      </div>
+    </div>
+  </div>  
+
+  <div class="section"></div>
+  <div class="container">
+    {% if messages %}
+        {% for message in messages %}
+        {% if 'success' in message.tags %}
+          <div class="container card-panel cyan lighten-2">
+            <p class="white-text">{{message}}</p>
+          </div>
+        {% endif %}
+        {% endfor %}
+       {% endif %}
+  </div> 
+ 
+
+  <script>
+  $(document).ready(function() {
+    $('.modal-trigger').leanModal();
+    $('select').material_select();
+  });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'books/styles.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>  
+
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a class="brand-logo">Book Hub</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'book_reviews:create' %}">Add Book and Author</a></li>
+          <li><a href="{% url 'book_reviews:index' %}">Home</a></li>
+          <li><a href="{% url 'login:logout' %}">Logout</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="{% url 'login:logout' %}">Logout</a></li>
+          <li><a href="{% url 'book_reviews:index' %}">Home</a></li>
+          </li>
+          <li><a href="{% url 'book_reviews:create' %}">Add Book Review</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <!-- end nav -->
+
+  <div class="row">
+  <div class="col s12 m6">
+  <div class="container">
+    <div class="section scrollspy">
+      <h3 class="red-text text-lighten-2">{{book.title}}</h3> 
+      <h5 class="red-text text-lighten-3">Author: {{author}}</h5>
+      {% for review in reviews %}
+        <div class="white z-depth-4">
+          <p>Review by <a href="{% url 'book_reviews:show_user' id=review.user.id %}">{{review.user.first_name}}</a> on {{review.created_at}}
+          </p>
+          <blockquote>
+            {{review.review_content}}
+            <br>
+            {% if review.rating == 1 %}
+            <img class="responsive-img" style="width: 30%" src="{% static 'books/one-star.png' %}" />
+            {% endif %}
+            {% if review.rating == 2 %}
+            <img class="responsive-img" style="width: 30%" src="{% static 'books/two-stars.png' %}" />
+            {% endif %}
+            {% if review.rating == 3 %}
+            <img class="responsive-img" style="width: 30%" src="{% static 'books/three-stars.png' %}" />
+            {% endif %}
+            {% if review.rating == 4 %}
+            <img class="responsive-img" style="width: 30%" src="{% static 'books/four_stars.png' %}" />
+            {% endif %}
+            {% if review.rating == 5 %}
+            <img class="responsive-img" style="width: 30%" src="{% static 'books/five_stars.png' %}" />
+            {% endif %}
+          </blockquote>
+         </div>
+       {% endfor %}
+    </div>
+  </div>
+  </div>
+
+  <!-- end reviews -->
+
+
+  
+    <div class="col s12 m6">
+      <div class="section"></div>
+      <div class="container">
+      <h5 class="red-text text-lighten-3">Review <span class="red-text text-lighten-2">{{book.title}}</span> now</h5>
+      <form class="white col s12 z-depth-1 red lighten-4" action="{% url 'book_reviews:create_review' id=book.id %}" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <div class="input-field col m12 s12">
+            <textarea name="review" class="materialize-textarea"></textarea>
+            <label class="red-text text-darken-2" for="review">Review</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <label class="red-text text-darken-2" for="rating">Rating</label>
+            <br/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <select class="browser-default" name="rating">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+             </select>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="col m12">
+           <p class="right-align"><button class="btn btn-large waves-effect waves-light indigo " type="submit" name="submit">Submit Review</button></p>
+          </div>
+        </div>
+      </form>
+    </div>
+   </div>
+  </div>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+  <!-- Compiled and minified JavaScript --> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script> 
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".button-collapse").sideNav();
+    });
+  </script>
+</body>
+</html>

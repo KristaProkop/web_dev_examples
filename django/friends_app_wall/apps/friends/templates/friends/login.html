@@ -1,0 +1,31 @@
+{% extends 'friends/base.html' %}
+
+{% block title %} {{ 'Login'}} {% endblock %}
+
+
+{% block content %}
+
+<div class="login-page">
+  <div class="form">
+    <h3>Login</h3>
+    {% if messages %}
+      {% for message in messages %}
+      <div class="col-sm-12">
+        <p class="alert alert-warning">
+      {{message}}</p>
+      </div>
+      {% endfor %}
+    {% endif %}
+    <form class="login-form" action="{% url 'friends:login' %}" method="POST">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="username"/>
+      <input type="password" name="password" placeholder="password"/>
+      <button>login</button>
+      <p class="message">Not registered? <a href="{% url 'friends:register' %}">Create an account</a></p>
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock %}
